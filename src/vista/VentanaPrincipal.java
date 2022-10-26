@@ -47,11 +47,6 @@ public class VentanaPrincipal extends JFrame {
 		btnAlumno.setBounds(69, 72, 89, 23);
 		contentPane.add(btnAlumno);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagenes/ciudad2.jpg")));
-		lblNewLabel.setBounds(0, 0, 501, 343);
-		contentPane.add(lblNewLabel);
-		
 		JButton btnMateria = new JButton("Materia");
 		btnMateria.setBounds(288, 72, 89, 23);
 		contentPane.add(btnMateria);
@@ -59,5 +54,12 @@ public class VentanaPrincipal extends JFrame {
 		JButton btnNota = new JButton("Nota");
 		btnNota.setBounds(171, 151, 89, 23);
 		contentPane.add(btnNota);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(VentanaPrincipal.class.getResource("/imagenes/ciudad2.jpg")));
+		lblNewLabel.setBounds(0, 0, 501, 343);
+		contentPane.add(lblNewLabel);
+		
+		
 	}
 }

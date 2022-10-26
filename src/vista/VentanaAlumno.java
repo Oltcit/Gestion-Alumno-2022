@@ -1,17 +1,21 @@
 package vista;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controlador.Coordinador;
-import java.awt.BorderLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JCheckBox;
+import modelo.AlumnoVO;
 
 public class VentanaAlumno extends JFrame {
 
@@ -27,7 +31,7 @@ public class VentanaAlumno extends JFrame {
 	private JButton btnModificar;
 	private JButton btnGuardar;
 	private JButton btnBuscar;
-	
+	private int accion;
 	
 
 	public Coordinador getMiCoordinador() {
@@ -58,7 +62,8 @@ public class VentanaAlumno extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaAlumno() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Altas, bajas, modificaciones y consultas de alumnos");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 616, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -70,9 +75,19 @@ public class VentanaAlumno extends JFrame {
 		contentPane.add(panel, BorderLayout.SOUTH);
 		
 		btnGuardar = new JButton("Guardar");
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				guardarAlumno();
+			}
+		});
 		panel.add(btnGuardar);
 		
 		btnAgregar = new JButton("Agregar");
+		btnAgregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				agregarAlumno();
+			}
+		});
 		panel.add(btnAgregar);
 		
 		btnModificar = new JButton("Modificar");
@@ -110,7 +125,7 @@ public class VentanaAlumno extends JFrame {
 		txtApe.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("Fecha de nacimiento:");
-		lblNewLabel_2.setBounds(32, 128, 118, 14);
+		lblNewLabel_2.setBounds(32, 128, 127, 14);
 		panel_1.add(lblNewLabel_2);
 		
 		txtFechaNac = new JTextField();
@@ -121,6 +136,48 @@ public class VentanaAlumno extends JFrame {
 		chkDoc = new JCheckBox("Documentaci\u00F3n");
 		chkDoc.setBounds(28, 172, 132, 23);
 		panel_1.add(chkDoc);
+		
+		limpiar();
+	}
+	
+	protected void guardarAlumno() {
+		
+	try {
+		AlumnoVO miAlumnoVO = new AlumnoVO();
+		miAlumnoVO.setDni(Integer.valueOf(txtDni.getText()));
+		miAlumnoVO.setApe(txtApe.getText());
+		miAlumnoVO.setFecha(txtFechaNac.getText());
+		if (chkDoc.isSelected())
+			miAlumnoVO.setDoc(1);
+		else
+			miAlumnoVO.setDoc(0);
+		
+		if (accion==1){
+			miCoordinador.registrarAlumno(miAlumnoVO);
+		} else {
+			miCoordinador.modificarAlumno(miAlumnoVO);
+		}
+		limpiar();
+	} catch (Exception e){
+		JOptionPane.showMessageDialog(null, "Error en el ingreso de datos","Error",
+				JOptionPane.ERROR_MESSAGE);
+		limpiar();
+	}
+	}
+
+	protected void agregarAlumno() {
+		accion = 1;
+		habilita(true, true, true, true, true, false, false, false, false, true);
+		txtDni.grabFocus();
+	}
+
+	private void limpiar() {
+		txtDni.setText("");
+		txtApe.setText("");
+		txtFechaNac.setText("");
+		chkDoc.setSelected(false);
+		
+		habilita(true,false,false,false,false,true,false,false,true,false);
 	}
 	
 	private void habilita(boolean dni, boolean ape, boolean fnac, boolean doc, boolean btnguarda, boolean btnAgrega, 
@@ -139,4 +196,5 @@ public class VentanaAlumno extends JFrame {
 		
 		
 	}
+	
 }
