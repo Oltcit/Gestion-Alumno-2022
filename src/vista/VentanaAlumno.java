@@ -91,15 +91,34 @@ public class VentanaAlumno extends JFrame {
 		panel.add(btnAgregar);
 		
 		btnModificar = new JButton("Modificar");
+		btnModificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modificarAlumno();
+			}
+		});
 		panel.add(btnModificar);
 		
 		btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				eliminarAlumno();
+			}
+		});
 		panel.add(btnEliminar);
 		
 		btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			buscarAlumno ();}
+		});
 		panel.add(btnBuscar);
 		
 		btnCancelar = new JButton("Cancela");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limpiar();
+			}
+		});
 		panel.add(btnCancelar);
 		
 		JPanel panel_1 = new JPanel();
@@ -140,6 +159,30 @@ public class VentanaAlumno extends JFrame {
 		limpiar();
 	}
 	
+	protected void eliminarAlumno() {
+		// TODO Auto-generated method stub
+		int respuesta = JOptionPane.showConfirmDialog(null, "Esta seguro?", "Confirmacion", JOptionPane.YES_NO_OPTION);
+		if (respuesta == JOptionPane.YES_NO_OPTION);
+		{
+			miCoordinador.eliminarAlumno(Integer.valueOf(txtDni.getText()));
+			limpiar();
+		}
+		
+		
+	}
+
+	protected void modificarAlumno() {
+		// TODO Auto-generated method stub
+		accion=2;
+		habilita(false, true, true, true, true, false, false, false, false,true);
+		
+	}
+
+	protected void buscarAlumno() {
+		miCoordinador.mostrarVentanaAlumnoBuscar();
+		
+	}
+
 	protected void guardarAlumno() {
 		
 	try {
@@ -194,6 +237,19 @@ public class VentanaAlumno extends JFrame {
 		btnBuscar.setEnabled(btnBusca);
 		btnCancelar.setEnabled(btnCancela);
 		
+		
+	}
+
+	public void muestraAlumno(AlumnoVO miAlumnoVO) {
+		// TODO Auto-generated method stub
+		txtDni.setText(String.valueOf(miAlumnoVO.getDni()));
+		txtApe.setText(miAlumnoVO.getApe());
+		txtFechaNac.setText(miAlumnoVO.getFecha());
+		if (miAlumnoVO.getDoc()==0)
+			chkDoc.setSelected(false);
+		else
+			chkDoc.setSelected(true);
+		habilita (false, false, false, false, false, false, true, true, false, true);
 		
 	}
 	
